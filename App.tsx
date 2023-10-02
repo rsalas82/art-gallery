@@ -1,8 +1,10 @@
 import * as ImagePicker from 'expo-image-picker'
+import * as MediaLibrary from 'expo-media-library'
 import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { ImageProps, StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { captureRef } from 'react-native-view-shot'
 
 import Button from './src/components/button'
 import CircleButton from './src/components/circle-button'
@@ -19,6 +21,13 @@ const App = () => {
   const [showAppOptions, setShowAppOptions] = useState(false)
   const [showModalOpen, setShowModalOpen] = useState(false)
   const [pickedSticker, setPickedSticker] = useState<ImageProps | null>(null)
+  const imageRef = useRef()
+
+  const [status, requestPermission] = MediaLibrary.usePermissions()
+
+  if (status === null) {
+    requestPermission()
+  }
 
   const pickImageAsync = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,12 +43,24 @@ const App = () => {
     }
   }
 
-  const onReset = () => {
-    setShowAppOptions(false)
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      })
+
+      await MediaLibrary.saveToLibraryAsync(localUri)
+      if (localUri) {
+        alert('Saved!')
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
-  const onSave = () => {
-    console.log('save pressed')
+  const onReset = () => {
+    setShowAppOptions(false)
   }
 
   const onAddSticker = () => {
@@ -57,15 +78,17 @@ const App = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.imageContainer}>
-        <ImageViewer placeholderImageSource={selectedImage} />
-        {pickedSticker !== null ? <EmojiSticker imageSize={40} emojiIcon={pickedSticker} /> : null}
+        <View ref={imageRef} collapsable={false}>
+          <ImageViewer placeholderImageSource={selectedImage} />
+          {pickedSticker !== null ? <EmojiSticker imageSize={40} emojiIcon={pickedSticker} /> : null}
+        </View>
       </View>
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
             <IconButton label="Reset" icon="refresh" onPress={onReset} />
             <CircleButton onPress={onAddSticker} />
-            <IconButton label="Save" icon="save-alt" onPress={onSave} />
+            <IconButton label="Save" icon="save-alt" onPress={onSaveImageAsync} />
           </View>
         </View>
       ) : (
@@ -77,7 +100,7 @@ const App = () => {
       <EmojiPicker isVisible={showModalOpen} onClose={onModalClose}>
         <EmojiList onSelect={onPickEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </GestureHandlerRootView>
   )
 }
