@@ -2,6 +2,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import { ImageProps, StyleSheet, View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import Button from './src/components/button'
 import CircleButton from './src/components/circle-button'
@@ -42,7 +43,6 @@ const App = () => {
   }
 
   const onAddSticker = () => {
-    console.log('PRESS')
     setShowModalOpen(true)
   }
 
@@ -55,7 +55,7 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer placeholderImageSource={selectedImage} />
         {pickedSticker !== null ? <EmojiSticker imageSize={40} emojiIcon={pickedSticker} /> : null}
@@ -78,7 +78,7 @@ const App = () => {
         <EmojiList onSelect={onPickEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
       <StatusBar style="auto" />
-    </View>
+    </GestureHandlerRootView>
   )
 }
 
