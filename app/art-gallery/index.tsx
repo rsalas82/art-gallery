@@ -6,21 +6,22 @@ import { ImageProps, StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { captureRef } from 'react-native-view-shot'
 
-import Button from './src/components/button'
-import CircleButton from './src/components/circle-button'
-import EmojiList from './src/components/emoji-list'
-import EmojiPicker from './src/components/emoji-picker'
-import EmojiSticker from './src/components/emoji-sticker'
-import IconButton from './src/components/icon-button'
-import ImageViewer from './src/components/image-viewer'
+import Button from '../../src/components/button'
+import CircleButton from '../../src/components/circle-button'
+import EmojiList from '../../src/components/emoji-list'
+import EmojiPicker from '../../src/components/emoji-picker'
+import EmojiSticker from '../../src/components/emoji-sticker'
+import IconButton from '../../src/components/icon-button'
+import ImageViewer from '../../src/components/image-viewer'
 
-const PlaceholderImage = require('./assets/images/background-image.png')
+const PlaceholderImage = require('../../assets/images/background-image.png')
 
-const App = () => {
+const ArtGallery = () => {
   const [selectedImage, setSelectedImage] = useState(PlaceholderImage)
   const [showAppOptions, setShowAppOptions] = useState(false)
   const [showModalOpen, setShowModalOpen] = useState(false)
   const [pickedSticker, setPickedSticker] = useState<ImageProps | null>(null)
+
   const imageRef = useRef()
 
   const [status, requestPermission] = MediaLibrary.usePermissions()
@@ -105,7 +106,7 @@ const App = () => {
   )
 }
 
-export default App
+export default ArtGallery
 
 const styles = StyleSheet.create({
   container: {
