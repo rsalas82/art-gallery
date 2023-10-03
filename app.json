@@ -3,6 +3,8 @@
     "name": "art-gallery",
     "slug": "art-gallery",
     "version": "1.0.0",
+    "runtimeVersion": "1.0.0",
+    "scheme": "art-gallery",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,12 +19,22 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rsalas82.artgallery"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "227c1097-a0b2-46a2-b4a1-4a661986ad2f"
+      }
     }
   }
 }
