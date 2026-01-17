@@ -27,9 +27,8 @@ const Users = () => {
     country,
     city,
   }: FlatUser) => {
-    router.setParams()
     router.push({
-      pathname: '/users/[userId]',
+      pathname: '/users/[id]',
       params: { id, name, image, username, address, gender, email, age, postcode, country, city },
     })
   }

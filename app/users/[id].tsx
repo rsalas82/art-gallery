@@ -3,7 +3,7 @@ import { router, useGlobalSearchParams } from 'expo-router'
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 const UserView = () => {
-  const { id, image, name, username, address, gender, age, email, postcode, country, city } = useGlobalSearchParams<{
+  const { id, image, name, username, address, gender, age, email, country, city } = useGlobalSearchParams<{
     name: string
     id: string
     image: string

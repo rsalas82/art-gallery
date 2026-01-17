@@ -22,7 +22,7 @@ const ArtGallery = () => {
   const [showModalOpen, setShowModalOpen] = useState(false)
   const [pickedSticker, setPickedSticker] = useState<ImageProps | null>(null)
 
-  const imageRef = useRef()
+  const imageRef = useRef<View>(null)
 
   const [status, requestPermission] = MediaLibrary.usePermissions()
 
